@@ -25,12 +25,15 @@ export default defineConfig(({ command }) => ({
     deltaComic({
       name: 'bika',
       displayName: '哔咔漫画',
-      supportCoreVersion: '^0.4',
+      supportCoreVersion: '^0.5',
       version: _package.version,
       author: _package.author.name,
       description: _package.description,
-      require: ['core'],
-    }, command)
+      require: ['core', {
+        id: 'layout',
+        download:'gh:delta-comic/delta-comic-plugin-layout'
+      }],
+    }, command, _package)
   ],
   resolve: {
     alias: {

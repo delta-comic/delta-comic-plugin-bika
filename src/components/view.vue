@@ -1,10 +1,11 @@
 <script setup lang='ts'>
 import { watch } from 'vue'
 import { BikaPage } from '@/api/page'
-import { coreModule, requireDepend, Store, Utils } from 'delta-comic-core'
+import { requireDepend, Store, Utils } from 'delta-comic-core'
 import { bika } from '@/api'
 import { config } from '@/config'
-const { view } = requireDepend(coreModule)
+import { LayoutPlugin } from '@/depend'
+const { view } = requireDepend(LayoutPlugin)
 const $props = defineProps<{
   page: BikaPage
 }>()
@@ -21,11 +22,10 @@ watch(() => bikaConfig.value.imageQuality, () => {
   smartAbortReloadAbortSignal.abort()
   $props.page.reloadAll(smartAbortReloadAbortSignal.signal)
 })
-
 </script>
 
 <template>
-  <view.Images :page v-model:isFullScreen="isFullScreen">
+  <view.Image :page v-model:isFullScreen="isFullScreen">
     <template #bottomBar>
       <VanPopover @select="q => bikaConfig.imageQuality = q.label" placement="top-end" theme="dark"
         :actions="Object.entries(imageQualityMap).map(v => ({ text: imageQualityMap[<bika.ImageQuality>v[0]], label: v[0] }))"
@@ -37,5 +37,5 @@ watch(() => bikaConfig.value.imageQuality, () => {
         </template>
       </VanPopover>
     </template>
-  </view.Images>
+  </view.Image>
 </template>

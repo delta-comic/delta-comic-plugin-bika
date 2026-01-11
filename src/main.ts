@@ -1,5 +1,5 @@
 import "@/index.css"
-import { coreModule, definePlugin, requireDepend, uni, Utils, type PluginConfigSubscribe } from "delta-comic-core"
+import { definePlugin, requireDepend, uni, Utils, type PluginConfigSubscribe } from "delta-comic-core"
 import { api, image, share } from "./api/forks"
 import axios from "axios"
 import { first, inRange, isEmpty } from "es-toolkit/compat"
@@ -19,7 +19,8 @@ import type { AxiosResponse } from "axios"
 import { config } from "./config"
 import { DrawOutlined, GTranslateOutlined, SearchOutlined } from "@vicons/material"
 import { UserOutlined } from "@vicons/antd"
-const { layout } = requireDepend(coreModule)
+import { LayoutPlugin } from "./depend"
+const { layout } = requireDepend(LayoutPlugin)
 const testAxios = axios.create({
   timeout: 10000,
   method: 'GET',
@@ -257,6 +258,9 @@ definePlugin({
       const f = ins.api.share
       const share = Utils.request.createAxios(() => f)
       bikaStore.share.value = share
+    }
+    return {
+      bika
     }
   },
   otherProgress: [{
