@@ -5,8 +5,8 @@ import { bika } from "."
 
 export class BikaPage extends uni.content.ContentImagePage {
   public static contentType = uni.content.ContentPage.contentPage.toString([
-    'default',
-    pluginName
+    pluginName,
+    'default'
   ])
   public override plugin = pluginName
   public override contentType = uni.content.ContentPage.contentPage.toJSON(BikaPage.contentType)
