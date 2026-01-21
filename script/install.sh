@@ -29,6 +29,9 @@ try {
 
   // 添加或更新 overrides 中的条目
   json.overrides['delta-comic-core'] = 'latest';
+  json.pnpm ??= {};
+  json.pnpm.overrides ??= {};
+  json.pnpm.overrides['delta-comic-core'] = 'latest';
 
   // 更新 dependencies 中的 delta-comic-core
   if (json.dependencies && json.dependencies['delta-comic-core']) {
