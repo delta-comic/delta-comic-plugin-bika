@@ -125,7 +125,7 @@ const _editSlogan = async () => {
     </div>
   </Comp.Popup>
 </template>
-<style scoped lang='scss'>
+<style scoped>
 :deep(.van-popover__wrapper) {
   width: 100% !important;
 }

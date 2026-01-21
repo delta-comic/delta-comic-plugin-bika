@@ -26,7 +26,7 @@
     "axios": "^1.13.2",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.19",
-    "delta-comic-core": "file:../delta-comic-core/dist/pack.tgz",
+    "delta-comic-core": "latest",
     "es-toolkit": "^1.43.0",
     "naive-ui": "^2.43.2",
     "vant": "^4.9.22",
@@ -59,6 +59,12 @@
       "@tailwindcss/oxide",
       "core-js",
       "esbuild"
-    ]
+    ],
+    "overrides": {
+      "delta-comic-core": "latest"
+    }
+  },
+  "overrides": {
+    "delta-comic-core": "latest"
   }
 }
