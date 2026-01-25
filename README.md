@@ -1,6 +1,7 @@
 # Delta Comic Plugin Bika - _<span style="font-weight: lighter;font-size:16px">何以忘却</span>_
 
 [![GitHub](https://img.shields.io/github/license/delta-comic/delta-comic-plugin-bika)](https://raw.githubusercontent.com/delta-comic/delta-comic-plugin-bika/main/LICENSE)
+![Donwload](https://img.shields.io/github/downloads/delta-comic/delta-comic-plugin-bika/total)
 
 - [delta-comic](https://github.com/delta-comic/delta-comic)的插件
 
