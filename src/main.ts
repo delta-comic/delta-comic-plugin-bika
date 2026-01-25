@@ -20,14 +20,17 @@ import { config } from "./config"
 import { DrawOutlined, GTranslateOutlined, SearchOutlined } from "@vicons/material"
 import { UserOutlined } from "@vicons/antd"
 import { LayoutPlugin } from "./depend"
+import { withTimeout } from "es-toolkit"
 const { layout } = requireDepend(LayoutPlugin)
 const testAxios = axios.create({
-  timeout: 10000,
+  timeout: 7000,
   method: 'GET',
   validateStatus(status) {
     return inRange(status, 199, 499)
-  }
+  },
+
 })
+
 testAxios.interceptors.response.use(undefined, Utils.request.utilInterceptors.createAutoRetry(testAxios, 2))
 
 const diff = async (that: PluginConfigSubscribe, olds: Parameters<PluginConfigSubscribe['getUpdateList']>[0], signal?: AbortSignal) => {
@@ -78,7 +81,10 @@ definePlugin({
   resource: {
     types: [{
       type: 'default',
-      test: (url, signal) => axios.get(`${url}/89173fc7-cce7-4957-b465-c9c9f5550756.jpg`, { signal }),
+      test: async (url, signal) => {
+        const body = await fetch(`${url}/89173fc7-cce7-4957-b465-c9c9f5550756.jpg`, { signal })
+        if (!body.ok) throw new Error('fail to connect')
+      },
       urls: image
     }],
   },

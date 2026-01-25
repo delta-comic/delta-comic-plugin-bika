@@ -88,7 +88,7 @@ const _editSlogan = async () => {
       <template #reference>
         <VanCell title="头像" clickable>
           <template #right-icon>
-            <Comp.Image :src="me.avatar" round class="h-[60px] w-[60px]" />
+            <Comp.Image :src="me.avatar" round class="size-15" />
           </template>
         </VanCell>
       </template>
@@ -104,7 +104,7 @@ const _editSlogan = async () => {
       <VuePictureCropper :box-style="AvatarEditor.option.boxStyle" :img="AvatarEditor.option.img || userIcon"
         :options="AvatarEditor.option.base" @ready="AvatarEditor.option.isReady = true" />
     </NSpin>
-    <div class="text-center w-full flex justify-evenly *:*:-mx-[2px]">
+    <div class="text-center w-full flex justify-evenly *:*:-mx-0.5">
       <VanButton icon="plus" round plain type="primary" @click="AvatarEditor.changeScale()"
         :loading="AvatarEditor.isUpdating.value" />
       <VanButton icon="minus" round plain type="primary" @click="AvatarEditor.changeScale(-1)"
@@ -113,7 +113,7 @@ const _editSlogan = async () => {
         :loading="AvatarEditor.isUpdating.value" />
       <VanButton round plain type="primary" @click="AvatarEditor.down()" :loading="AvatarEditor.isUpdating.value">
         <template #icon>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="w-5 -mx-[1px]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="w-5 -mx-px">
             <path fill="currentColor"
               d="M160 832h704a32 32 0 1 1 0 64H160a32 32 0 1 1 0-64m384-253.696 236.288-236.352 45.248 45.248L508.8 704 192 387.2l45.248-45.248L480 584.704V128h64z">
             </path>

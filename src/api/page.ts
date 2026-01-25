@@ -23,7 +23,7 @@ export class BikaPage extends uni.content.ContentImagePage {
         } else
           return v
       })),
-      this.pid.content.isLoading.value || this.pid.content.loadPromise(bika.api.comic.getComicPicId(this.id, signal).then(v => String(v))),
+      this.pid.content.isLoading.value || this.pid.content.loadPromise(bika.api.comic.getComicPicId(this.id, signal).then(v => `Pica${v}`)),
       this.recommends.content.isLoading.value || this.recommends.content.loadPromise(bika.api.comic.getRecommendComics(this.id, signal)),
       this.images.content.isLoading.value || this.images.content.loadPromise(bika.api.comic.getComicPages(this.id, Number(this.ep), signal).then(v => Promise.all(v.map(v => v.$media.toUni())))),
     ])
