@@ -23,7 +23,7 @@ export default defineConfig(
           {
             name: 'bika',
             displayName: '哔咔漫画',
-            supportCoreVersion: '^0.5',
+            supportCoreVersion: '^1.1',
             version: _package.version,
             author: _package.author.name,
             description: _package.description,

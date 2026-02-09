@@ -24,7 +24,7 @@ export namespace _bikaUser {
     constructor(v: RawUser) {
       super({
         avatar: v.avatar
-          ? { $$plugin: pluginName, forkNamespace: 'default', path: v.avatar.path ?? '' }
+          ? { $$plugin: pluginName, type: 'default', pathname: v.avatar.path ?? '' }
           : undefined,
         id: v._id,
         name: v.name,
@@ -45,7 +45,7 @@ export namespace _bikaUser {
     constructor(v: RawUserMe) {
       super({
         avatar: v.avatar
-          ? { $$plugin: pluginName, forkNamespace: 'default', path: v.avatar.path ?? '' }
+          ? { $$plugin: pluginName, type: 'default', pathname: v.avatar.path ?? '' }
           : undefined,
         id: v._id,
         name: v.name,
@@ -63,7 +63,7 @@ export namespace _bikaUser {
     constructor(v: RawKnight) {
       super({
         avatar: v.avatar
-          ? { $$plugin: pluginName, forkNamespace: 'default', path: v.avatar.path ?? '' }
+          ? { $$plugin: pluginName, type: 'default', pathname: v.avatar.path ?? '' }
           : undefined,
         id: v._id,
         name: v.name,

@@ -13,7 +13,6 @@ import {
   Utils,
   type PluginConfigSubscribe
 } from 'delta-comic-core'
-import { withTimeout } from 'es-toolkit'
 import { first, inRange, isEmpty } from 'es-toolkit/compat'
 
 import { bika } from './api'
