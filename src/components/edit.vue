@@ -1,4 +1,4 @@
-<script setup lang='ts'>
+<script setup lang="ts">
 import VuePictureCropper, { cropper } from 'vue-picture-cropper'
 import { bika } from '@/api'
 import { useFileDialog } from '@vueuse/core'
@@ -10,16 +10,16 @@ class AvatarEditor {
   public static show = shallowRef(false)
   public static option = reactive({
     boxStyle: {},
-    base: {
-      viewMode: 1,
-      dragMode: 'move',
-      aspectRatio: 1,
-    },
+    base: { viewMode: 1, dragMode: 'move', aspectRatio: 1 },
     img: '',
     isReady: false
   })
-  public static changeScale(num: number = 1) { cropper?.zoom(num) }
-  public static rotate(reg = 90) { cropper?.rotate(reg) }
+  public static changeScale(num: number = 1) {
+    cropper?.zoom(num)
+  }
+  public static rotate(reg = 90) {
+    cropper?.rotate(reg)
+  }
   public static isUpdating = shallowRef(false)
   public static async updateImg() {
     this.isUpdating.value = true
@@ -38,7 +38,7 @@ class AvatarEditor {
   public static down() {
     const aLink = document.createElement('a')
     aLink.download = 'author-img'
-    cropper?.getFile().then((data) => {
+    cropper?.getFile().then(data => {
       aLink.href = window.URL.createObjectURL(data!)
       aLink.click()
     })
@@ -46,10 +46,7 @@ class AvatarEditor {
 }
 const uploadToAvatarEditor = async () => {
   const image = await new Promise<File>(r => {
-    const filer = useFileDialog({
-      accept: 'image/*',
-      reset: true
-    })
+    const filer = useFileDialog({ accept: 'image/*', reset: true })
     filer.open()
     filer.onChange(fl => {
       if (fl) r(fl[0])
@@ -83,8 +80,15 @@ const _editSlogan = async () => {
 
 <template>
   <div>
-    <VanPopover :actions="[{ text: '修改' }, { text: '查看' }]"
-      @select="({ text }) => text == '修改' ? uploadToAvatarEditor() : me.avatar && me.avatar.getUrl().then(img => Utils.image.showImagePreview([img]))">
+    <VanPopover
+      :actions="[{ text: '修改' }, { text: '查看' }]"
+      @select="
+        ({ text }) =>
+          text == '修改'
+            ? uploadToAvatarEditor()
+            : me.avatar && me.avatar.getUrl().then(img => Utils.image.showImagePreview([img]))
+      "
+    >
       <template #reference>
         <VanCell title="头像" clickable>
           <template #right-icon>
@@ -93,35 +97,89 @@ const _editSlogan = async () => {
         </VanCell>
       </template>
     </VanPopover>
-    <VanField class="my-2" v-model="slogan" type="textarea" rows="1" autosize label="简介" placeholder="null"
-      label-align="top" />
-    <VanButton block class="w-[98%] mx-auto" size="normal" type="primary" @click="_editSlogan()"
-      :loading="isEditingSlogan">
-      提交简介更新</VanButton>
+    <VanField
+      class="my-2"
+      v-model="slogan"
+      type="textarea"
+      rows="1"
+      autosize
+      label="简介"
+      placeholder="null"
+      label-align="top"
+    />
+    <VanButton
+      block
+      class="mx-auto w-[98%]"
+      size="normal"
+      type="primary"
+      @click="_editSlogan()"
+      :loading="isEditingSlogan"
+    >
+      提交简介更新</VanButton
+    >
   </div>
-  <Comp.Popup v-model:show="AvatarEditor.show.value" closeable class="flex flex-col w-[90vw] py-5 h-[115vw]">
-    <NSpin :show="!AvatarEditor.option.isReady" class="w-[90%] m-auto">
-      <VuePictureCropper :box-style="AvatarEditor.option.boxStyle" :img="AvatarEditor.option.img || userIcon"
-        :options="AvatarEditor.option.base" @ready="AvatarEditor.option.isReady = true" />
+  <Comp.Popup
+    v-model:show="AvatarEditor.show.value"
+    closeable
+    class="flex h-[115vw] w-[90vw] flex-col py-5"
+  >
+    <NSpin :show="!AvatarEditor.option.isReady" class="m-auto w-[90%]">
+      <VuePictureCropper
+        :box-style="AvatarEditor.option.boxStyle"
+        :img="AvatarEditor.option.img || userIcon"
+        :options="AvatarEditor.option.base"
+        @ready="AvatarEditor.option.isReady = true"
+      />
     </NSpin>
-    <div class="text-center w-full flex justify-evenly *:*:-mx-0.5">
-      <VanButton icon="plus" round plain type="primary" @click="AvatarEditor.changeScale()"
-        :loading="AvatarEditor.isUpdating.value" />
-      <VanButton icon="minus" round plain type="primary" @click="AvatarEditor.changeScale(-1)"
-        :loading="AvatarEditor.isUpdating.value" />
-      <VanButton icon="replay" round plain type="primary" @click="AvatarEditor.rotate(-90)"
-        :loading="AvatarEditor.isUpdating.value" />
-      <VanButton round plain type="primary" @click="AvatarEditor.down()" :loading="AvatarEditor.isUpdating.value">
+    <div class="flex w-full justify-evenly text-center *:*:-mx-0.5">
+      <VanButton
+        icon="plus"
+        round
+        plain
+        type="primary"
+        @click="AvatarEditor.changeScale()"
+        :loading="AvatarEditor.isUpdating.value"
+      />
+      <VanButton
+        icon="minus"
+        round
+        plain
+        type="primary"
+        @click="AvatarEditor.changeScale(-1)"
+        :loading="AvatarEditor.isUpdating.value"
+      />
+      <VanButton
+        icon="replay"
+        round
+        plain
+        type="primary"
+        @click="AvatarEditor.rotate(-90)"
+        :loading="AvatarEditor.isUpdating.value"
+      />
+      <VanButton
+        round
+        plain
+        type="primary"
+        @click="AvatarEditor.down()"
+        :loading="AvatarEditor.isUpdating.value"
+      >
         <template #icon>
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="w-5 -mx-px">
-            <path fill="currentColor"
-              d="M160 832h704a32 32 0 1 1 0 64H160a32 32 0 1 1 0-64m384-253.696 236.288-236.352 45.248 45.248L508.8 704 192 387.2l45.248-45.248L480 584.704V128h64z">
-            </path>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" class="-mx-px w-5">
+            <path
+              fill="currentColor"
+              d="M160 832h704a32 32 0 1 1 0 64H160a32 32 0 1 1 0-64m384-253.696 236.288-236.352 45.248 45.248L508.8 704 192 387.2l45.248-45.248L480 584.704V128h64z"
+            ></path>
           </svg>
         </template>
       </VanButton>
-      <VanButton :loading="AvatarEditor.isUpdating.value" icon="success" round plain type="success"
-        @click="AvatarEditor.updateImg()" />
+      <VanButton
+        :loading="AvatarEditor.isUpdating.value"
+        icon="success"
+        round
+        plain
+        type="success"
+        @click="AvatarEditor.updateImg()"
+      />
     </div>
   </Comp.Popup>
 </template>

@@ -1,10 +1,10 @@
-import { uni } from "delta-comic-core"
-import { _bikaImage } from "./image"
-import { _bikaUser } from "./user"
-import { bika } from "."
+import { uni } from 'delta-comic-core'
+
+import { bika } from '.'
+import { _bikaImage } from './image'
+import { _bikaUser } from './user'
 
 export namespace _bikaComic {
-
   export interface RawBaseComic {
     _id: string
     title: string

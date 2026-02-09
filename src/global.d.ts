@@ -1,5 +1,7 @@
-import { type useMessage, type useLoadingBar, type useDialog } from 'naive-ui'
 import type { Router } from 'vue-router'
+
+import { type useMessage, type useLoadingBar, type useDialog } from 'naive-ui'
+
 import type { ExternalLibKey } from './external'
 declare global {
   interface Window {
@@ -28,19 +30,12 @@ export declare module 'axios' {
 
 export declare module 'vue-router' {
   interface Router {
-    force: {
-      push: Router['push']
-      replace: Router['replace']
-    }
+    force: { push: Router['push']; replace: Router['replace'] }
   }
   interface RouteMeta {
-    statusBar?: {
-      overlaysWebView?: boolean
-      style?: Style
-      backgroundColor?: string
-    }
+    statusBar?: { overlaysWebView?: boolean; style?: Style; backgroundColor?: string }
     force?: boolean
   }
 }
 
-export { }
+export {}

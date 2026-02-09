@@ -1,11 +1,12 @@
-import type { uni } from "delta-comic-core"
-import { createCommonToUniItem } from "./api/utils"
-import { _bikaComic } from "./comic"
-import { _bikaImage } from "./image"
-import type { _bikaUser } from "./user"
+import type { uni } from 'delta-comic-core'
+
+import type { _bikaUser } from './user'
+
+import { createCommonToUniItem } from './api/utils'
+import { _bikaComic } from './comic'
+import { _bikaImage } from './image'
 
 export namespace _bikaSearch {
-
   export interface RawCollection {
     comics: _bikaComic.RawCommonComic[]
     title: string
@@ -17,7 +18,7 @@ export namespace _bikaSearch {
     public title: string
     public comics: _bikaComic.RawCommonComic[]
     public get $comics() {
-      return this.comics.map((c) => createCommonToUniItem(c))
+      return this.comics.map(c => createCommonToUniItem(c))
     }
     constructor(protected $$raw: RawCollection) {
       this.title = $$raw.title
@@ -55,7 +56,7 @@ export namespace _bikaSearch {
 
   export interface Init {
     apiLevel: number
-    categories: { id: string, title: string }[]
+    categories: { id: string; title: string }[]
     imageServer: string
     isIdUpdated: boolean
     isPunched: boolean
@@ -64,7 +65,7 @@ export namespace _bikaSearch {
   }
 
   export interface Levelboard {
-    users: _bikaUser.Knight[],
+    users: _bikaUser.Knight[]
     comics: uni.item.Item[][]
   }
 }

@@ -1,8 +1,10 @@
-import { _bikaUser } from "./user"
-import { uni } from "delta-comic-core"
-import { bika } from "."
-import { pluginName } from "@/symbol"
-import { defaults } from "es-toolkit/compat"
+import { uni } from 'delta-comic-core'
+import { defaults } from 'es-toolkit/compat'
+
+import { pluginName } from '@/symbol'
+
+import { bika } from '.'
+import { _bikaUser } from './user'
 
 export namespace _bikaComment {
   export interface RawBaseComment {
@@ -21,10 +23,7 @@ export namespace _bikaComment {
     _comic: string
   }
   export interface RawMyComment extends RawBaseComment {
-    _comic: {
-      _id: string
-      title: string
-    }
+    _comic: { _id: string; title: string }
   }
   export interface RawChildComment extends RawComment {
     _parent: string
@@ -45,23 +44,22 @@ export namespace _bikaComment {
     public override sender!: uni.user.User
     public override children = bika.api.comment.createChildCommentsStream(this.id)
     constructor(v: RawBaseComment) {
-      const sender = new _bikaUser.User(defaults(v._user ?? {}, <_bikaUser.RawUser>{
-        _id: Math.random().toString(),
-        characters: [],
-        exp: 0,
-        gender: 'bot',
-        level: 0,
-        name: '匿名',
-        slogan: '',
-        title: '',
-        verified: false
-      }))
+      const sender = new _bikaUser.User(
+        defaults(v._user ?? {}, <_bikaUser.RawUser>{
+          _id: Math.random().toString(),
+          characters: [],
+          exp: 0,
+          gender: 'bot',
+          level: 0,
+          name: '匿名',
+          slogan: '',
+          title: '',
+          verified: false
+        })
+      )
       super({
         childrenCount: v.commentsCount,
-        content: {
-          text: v.content,
-          type: 'string'
-        },
+        content: { text: v.content, type: 'string' },
         id: v._id,
         isLiked: v.isLiked,
         likeCount: v.likesCount,
@@ -69,9 +67,7 @@ export namespace _bikaComment {
         sender,
         reported: v.hide,
         $$plugin: pluginName,
-        $$meta: {
-          raw: v
-        },
+        $$meta: { raw: v },
         isTop: v.isTop
       })
       this.sender = sender

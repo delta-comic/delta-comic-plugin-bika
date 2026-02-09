@@ -1,6 +1,8 @@
-import { _bikaImage } from './image'
 import { uni } from 'delta-comic-core'
+
 import { pluginName } from '@/symbol'
+
+import { _bikaImage } from './image'
 export namespace _bikaUser {
   export type Gender = 'f' | 'm' | 'bot'
   export interface RawUser {
@@ -21,11 +23,9 @@ export namespace _bikaUser {
     public override customUser: RawUser
     constructor(v: RawUser) {
       super({
-        avatar: v.avatar ? {
-          $$plugin: pluginName,
-          forkNamespace: 'default',
-          path: v.avatar.path ?? ''
-        } : undefined,
+        avatar: v.avatar
+          ? { $$plugin: pluginName, forkNamespace: 'default', path: v.avatar.path ?? '' }
+          : undefined,
         id: v._id,
         name: v.name,
         $$plugin: pluginName
@@ -44,11 +44,9 @@ export namespace _bikaUser {
     public override customUser: RawUserMe
     constructor(v: RawUserMe) {
       super({
-        avatar: v.avatar ? {
-          $$plugin: pluginName,
-          forkNamespace: 'default',
-          path: v.avatar.path ?? ''
-        } : undefined,
+        avatar: v.avatar
+          ? { $$plugin: pluginName, forkNamespace: 'default', path: v.avatar.path ?? '' }
+          : undefined,
         id: v._id,
         name: v.name,
         $$plugin: pluginName
@@ -64,11 +62,9 @@ export namespace _bikaUser {
     public override customUser: RawKnight
     constructor(v: RawKnight) {
       super({
-        avatar: v.avatar ? {
-          $$plugin: pluginName,
-          forkNamespace: 'default',
-          path: v.avatar.path ?? ''
-        } : undefined,
+        avatar: v.avatar
+          ? { $$plugin: pluginName, forkNamespace: 'default', path: v.avatar.path ?? '' }
+          : undefined,
         id: v._id,
         name: v.name,
         $$plugin: pluginName
