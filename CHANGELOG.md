@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.2.0...1.3.0) (2026-02-09)
+
+
+### Features
+
+* **type:** [pub] new version support ([0e159ca](https://github.com/delta-comic/delta-comic-plugin-bika/commit/0e159ca51d4885650d1776ef972c2d97ce4c8d12))
+
 # [1.2.0](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.1.0...1.2.0) (2026-02-09)
 
 
