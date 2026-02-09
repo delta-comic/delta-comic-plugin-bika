@@ -83,7 +83,8 @@
       "@parcel/watcher",
       "@tailwindcss/oxide",
       "core-js",
-      "esbuild"
+      "esbuild",
+      "delta-comic-plugin-layout"
     ],
     "overrides": {
       "vite": "^8.0.0-beta.13",
