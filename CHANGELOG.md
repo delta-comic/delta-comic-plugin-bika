@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.3.0...1.3.1) (2026-02-09)
+
+
+### Bug Fixes
+
+* **ci:** release file upload [pub] ([8a73765](https://github.com/delta-comic/delta-comic-plugin-bika/commit/8a73765374dddf2ac568b6b912696dbd1d0171c9))
+
 # [1.3.0](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.2.0...1.3.0) (2026-02-09)
 
 
