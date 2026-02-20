@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.3.1...1.4.0) (2026-02-20)
+
+
+### Features
+
+* [pub] new core ([2d810e6](https://github.com/delta-comic/delta-comic-plugin-bika/commit/2d810e6201a050fe7131c6e4029781b0ceabcaaa))
+
 ## [1.3.1](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.3.0...1.3.1) (2026-02-09)
 
 

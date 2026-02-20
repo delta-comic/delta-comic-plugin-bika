@@ -91,7 +91,11 @@
       "delta-comic-plugin-layout"
     ],
     "overrides": {
-      "vite": "^8.0.0-beta.15"
+      "vite": "^8.0.0-beta.15",
+      "delta-comic-core": "latest"
     }
+  },
+  "overrides": {
+    "delta-comic-core": "latest"
   }
 }
