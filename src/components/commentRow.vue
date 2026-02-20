@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { coreModule, requireDepend, uni } from 'delta-comic-core'
 import { bika } from '@/api'
+import type { uni } from '@delta-comic/model'
+import { require } from '@delta-comic/plugin'
+import { LayoutPlugin } from '@/depend'
+
 const $props = defineProps<{
   comment: uni.comment.Comment
   item: uni.item.Item
@@ -18,11 +21,16 @@ const isUploader = computed(
   () => raw.value._user && rawUploader.value && rawUploader.value._id == raw.value._user._id
 )
 
-const { comp } = requireDepend(coreModule)
+const {
+  component: {
+    comment: { CommentRow }
+  }
+} = require(LayoutPlugin)
 </script>
 
 <template>
-  <comp.CommentRow
+  <CommentRow
+    :item
     @clickUser="$emit('clickUser', $event)"
     @click="$emit('click', $event)"
     :comment
@@ -39,5 +47,5 @@ const { comp } = requireDepend(coreModule)
         >UP</span
       >
     </template>
-  </comp.CommentRow>
+  </CommentRow>
 </template>

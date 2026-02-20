@@ -14,6 +14,10 @@ declare module 'vue' {
   export interface GlobalComponents {
     Card: typeof import('./src/components/card.vue')['default']
     CommentRow: typeof import('./src/components/commentRow.vue')['default']
+    DcImage: typeof import('@delta-comic/ui')['DcImage']
+    DcPopup: typeof import('@delta-comic/ui')['DcPopup']
+    DcText: typeof import('@delta-comic/ui')['DcText']
+    DcWaterfall: typeof import('@delta-comic/ui')['DcWaterfall']
     Edit: typeof import('./src/components/edit.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NIcon: typeof import('naive-ui')['NIcon']
@@ -38,6 +42,10 @@ declare module 'vue' {
 declare global {
   const Card: typeof import('./src/components/card.vue')['default']
   const CommentRow: typeof import('./src/components/commentRow.vue')['default']
+  const DcImage: typeof import('@delta-comic/ui')['DcImage']
+  const DcPopup: typeof import('@delta-comic/ui')['DcPopup']
+  const DcText: typeof import('@delta-comic/ui')['DcText']
+  const DcWaterfall: typeof import('@delta-comic/ui')['DcWaterfall']
   const Edit: typeof import('./src/components/edit.vue')['default']
   const NButton: typeof import('naive-ui')['NButton']
   const NIcon: typeof import('naive-ui')['NIcon']

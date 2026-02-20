@@ -1,14 +1,12 @@
-import { Utils } from 'delta-comic-core'
+import { PromiseContent } from '@delta-comic/model'
 
 import { bikaStore } from '@/store'
 
 import type { bika as BikaType } from '..'
-
 import { _bikaUser } from '../user'
 import { bikaStream, createLessToUniItem, createStructFromResponseStream } from './utils'
 
 export namespace _bikaApiUser {
-  const { PromiseContent } = Utils.data
   export const editSlogan = PromiseContent.fromAsyncFunction(
     (slogan: string, signal?: AbortSignal) =>
       bikaStore.api.value!.put('/users/profile', { slogan }, { signal })

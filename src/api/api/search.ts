@@ -1,10 +1,10 @@
-import { Utils, type PluginConfigSearchHotPageLevelboard, type uni } from 'delta-comic-core'
+import { PromiseContent, type uni } from '@delta-comic/model'
+import type { Search } from '@delta-comic/plugin'
 import { random } from 'es-toolkit/compat'
 
 import { bikaStore } from '@/store'
 
 import type { bika as BikaType } from '..'
-
 import { _bikaSearch } from '../search'
 import { _bikaUser } from '../user'
 import {
@@ -15,7 +15,6 @@ import {
   createStructFromResponseStream
 } from './utils'
 export namespace _bikaApiSearch {
-  const { PromiseContent } = Utils.data
   export const getHotTags = PromiseContent.fromAsyncFunction(
     async (signal?: AbortSignal) =>
       (await bikaStore.api.value!.get<{ keywords: string[] }>('/keywords', { signal })).keywords
@@ -94,7 +93,7 @@ export namespace _bikaApiSearch {
             return c.map(c => createLessToUniItem(c))
           })
       }
-    ] satisfies PluginConfigSearchHotPageLevelboard[]
+    ] satisfies Search.HotLevelboard[]
 
   export const getInit = (signal?: AbortSignal) =>
     PromiseContent.fromPromise(
@@ -102,7 +101,6 @@ export namespace _bikaApiSearch {
     )
 }
 export namespace _bikaApiSearch.utils {
-  const { PromiseContent } = Utils.data
   export const getComicsByKeyword = PromiseContent.fromAsyncFunction(
     async (keyword: string, page = 1, sort: BikaType.SortType = 'dd', signal?: AbortSignal) =>
       createStructFromResponseStream(

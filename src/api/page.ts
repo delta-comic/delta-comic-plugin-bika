@@ -1,11 +1,17 @@
-import { uni, Utils } from 'delta-comic-core'
+import { uni } from '@delta-comic/model'
+import { require } from '@delta-comic/plugin'
+import { createDialog } from '@delta-comic/ui'
+import type { LayoutLib } from 'delta-comic-plugin-layout'
 
 import View from '@/components/view.vue'
+import { LayoutPlugin } from '@/depend'
 import { pluginName } from '@/symbol'
 
 import { bika } from '.'
 
-export class BikaPage extends uni.content.ContentImagePage {
+const { model }: LayoutLib = require(LayoutPlugin)
+
+export class BikaPage extends model.ContentImagePage {
   public static contentType = uni.content.ContentPage.contentPage.toString([pluginName, 'default'])
   public override plugin = pluginName
   public override contentType = uni.content.ContentPage.contentPage.toJSON(BikaPage.contentType)
@@ -17,7 +23,7 @@ export class BikaPage extends uni.content.ContentImagePage {
         this.detail.content.loadPromise(
           bika.api.comic.getComicInfo(this.id, signal).then(v => {
             if (!v) {
-              throw Utils.message.createDialog({
+              throw createDialog({
                 type: 'error',
                 content: `${pluginName}漫画id:${this.id}审核中`,
                 positiveText: '确定'

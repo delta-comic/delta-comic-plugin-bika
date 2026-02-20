@@ -1,14 +1,12 @@
-import { Utils } from 'delta-comic-core'
+import { PromiseContent } from '@delta-comic/model'
 
 import { bikaStore } from '@/store'
 
 import type { bika as BikaType } from '..'
-
 import { _bikaComment } from '../comment'
 import { bikaStream, createClassFromResponseStream } from './utils'
 
 export namespace _bikaApiComment {
-  const { PromiseContent } = Utils.data
   export const likeComment = PromiseContent.fromAsyncFunction(
     async (id: string, signal?: AbortSignal) =>
       (

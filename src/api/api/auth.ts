@@ -1,11 +1,10 @@
-import { Utils } from 'delta-comic-core'
+import { PromiseContent } from '@delta-comic/model'
 
 import { bikaStore } from '@/store'
 
 import type { bika as BikaType } from '..'
 
 export namespace _bikaApiAuth {
-  const { PromiseContent } = Utils.data
   export const login = PromiseContent.fromAsyncFunction(
     (loginData: BikaType.auth.LoginData, signal?: AbortSignal) =>
       bikaStore.api.value!.post<{ token: string }>('/auth/sign-in', loginData, { signal })

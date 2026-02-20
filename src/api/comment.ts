@@ -1,4 +1,4 @@
-import { uni } from 'delta-comic-core'
+import { uni } from '@delta-comic/model'
 import { defaults } from 'es-toolkit/compat'
 
 import { pluginName } from '@/symbol'

@@ -1,13 +1,16 @@
+import { fileURLToPath, URL } from 'node:url'
+
+import { DeltaComicUiResolver } from '@delta-comic/ui/vite'
+import { deltaComic } from '@delta-comic/vite'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import browserslist from 'browserslist'
-import { deltaComic } from 'delta-comic-core/vite'
 import { browserslistToTargets } from 'lightningcss'
-import { fileURLToPath, URL } from 'node:url'
 import { NaiveUiResolver, VantResolver } from 'unplugin-vue-components/resolvers'
 import Components from 'unplugin-vue-components/vite'
 import { defineConfig, type UserConfigExport } from 'vite'
+// import dts from 'vite-plugin-dts'
 
 import _package from './package.json'
 
@@ -15,15 +18,19 @@ export default defineConfig(
   ({ command }) =>
     ({
       plugins: [
+        // dts({ include: ['./src'], outDir: './type', tsconfigPath: './tsconfig.json' }),
         vue(),
         vueJsx(),
-        Components({ dts: true, resolvers: [NaiveUiResolver(), VantResolver()] }),
+        Components({
+          dts: true,
+          resolvers: [NaiveUiResolver(), VantResolver(), DeltaComicUiResolver()]
+        }),
         tailwindcss(),
         deltaComic(
           {
             name: 'bika',
             displayName: '哔咔漫画',
-            supportCoreVersion: '^1.1',
+            supportCoreVersion: '^1',
             version: _package.version,
             author: _package.author.name,
             description: _package.description,

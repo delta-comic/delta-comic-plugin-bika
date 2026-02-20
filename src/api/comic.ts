@@ -1,4 +1,4 @@
-import { uni } from 'delta-comic-core'
+import { uni } from '@delta-comic/model'
 
 import { bika } from '.'
 import { _bikaImage } from './image'

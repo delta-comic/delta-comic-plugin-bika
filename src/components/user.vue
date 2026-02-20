@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { bika } from '@/api'
-import { Comp } from 'delta-comic-core'
 import userIcon from '@/assets/images/userIcon.webp?url'
 import { computed } from 'vue'
 
@@ -41,7 +40,7 @@ const userCharactersTranslator = (character: string) =>
 <template>
   <NThing class="relative w-full overflow-hidden bg-(--van-background-2)">
     <template #avatar>
-      <Comp.Image
+      <DcImage
         :src="user.avatar"
         :fallback="userIcon"
         previewable
@@ -112,7 +111,7 @@ const userCharactersTranslator = (character: string) =>
           {{ userCharactersTranslator(c) }}
         </VanTag>
       </div>
-      <div class="flex !w-[60%] items-center">
+      <div class="flex w-3/5! items-center">
         <span class="no-color-change-transition mr-1 text-xs text-(--van-text-color-2)">
           {{ exp }}/{{ needExp }}
         </span>
@@ -125,10 +124,10 @@ const userCharactersTranslator = (character: string) =>
         />
       </div>
     </template>
-    <Comp.Text
+    <DcText
       :text="user.customUser.slogan"
       v-if="!isSmall"
-      class="w-[calc(100%-8px*2)] p-2 !text-xs !text-(--van-text-color-2)"
+      class="w-[calc(100%-8px*2)] p-2 text-xs! text-(--van-text-color-2)!"
     />
     <slot />
   </NThing>

@@ -1,10 +1,9 @@
-import type { uni } from 'delta-comic-core'
-
-import type { _bikaUser } from './user'
+import type { uni } from '@delta-comic/model'
 
 import { createCommonToUniItem } from './api/utils'
 import { _bikaComic } from './comic'
 import { _bikaImage } from './image'
+import type { _bikaUser } from './user'
 
 export namespace _bikaSearch {
   export interface RawCollection {

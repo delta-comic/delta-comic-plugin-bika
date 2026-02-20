@@ -1,4 +1,4 @@
-import { uni, Utils } from 'delta-comic-core'
+import { Stream, type uni } from '@delta-comic/model'
 import { isArray, isEmpty } from 'es-toolkit/compat'
 
 import { pluginName } from '@/symbol'
@@ -9,7 +9,7 @@ import { BikaPage } from '../page'
 export function bikaStream<T>(
   api: (page: number, signal: AbortSignal) => PromiseLike<bika.api.pica.RawStream<T>>
 ) {
-  return Utils.data.Stream.create<T>(async function* (signal, that) {
+  return Stream.create<T>(async function* (signal, that) {
     while (true) {
       if (that.pages.value <= that.page.value) return
       that.page.value++

@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { watch } from 'vue'
 import { BikaPage } from '@/api/page'
-import { requireDepend, Store, Utils } from 'delta-comic-core'
 import { bika } from '@/api'
 import { config } from '@/config'
 import { LayoutPlugin } from '@/depend'
-const { view } = requireDepend(LayoutPlugin)
+import { require, useConfig } from '@delta-comic/plugin'
+import { SmartAbortController } from '@delta-comic/request'
+
+const { view } = require(LayoutPlugin)
+
 const $props = defineProps<{ page: BikaPage }>()
 const isFullScreen = defineModel<boolean>('isFullScreen', { required: true })
 const imageQualityMap: Record<bika.ImageQuality, string> = {
@@ -14,8 +17,8 @@ const imageQualityMap: Record<bika.ImageQuality, string> = {
   high: '超清',
   original: '大清'
 }
-const bikaConfig = Store.useConfig().$load(config)
-const smartAbortReloadAbortSignal = new Utils.request.SmartAbortController()
+const bikaConfig = useConfig().$load(config)
+const smartAbortReloadAbortSignal = new SmartAbortController()
 watch(
   () => bikaConfig.value.imageQuality,
   () => {

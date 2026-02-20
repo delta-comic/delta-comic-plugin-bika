@@ -4,8 +4,10 @@ import { bika } from '@/api'
 import { useFileDialog } from '@vueuse/core'
 import { computed, reactive, shallowRef } from 'vue'
 import userIcon from '@/assets/images/userIcon.webp?url'
-import { Comp, uni, Utils } from 'delta-comic-core'
 import { pluginName } from '@/symbol'
+import { createLoadingMessage, showImagePreview } from '@delta-comic/ui'
+import { uni } from '@delta-comic/model'
+
 class AvatarEditor {
   public static show = shallowRef(false)
   public static option = reactive({
@@ -23,7 +25,7 @@ class AvatarEditor {
   public static isUpdating = shallowRef(false)
   public static async updateImg() {
     this.isUpdating.value = true
-    const loading = Utils.message.createLoadingMessage('上传中')
+    const loading = createLoadingMessage('上传中')
     try {
       if (!cropper) throw new Error()
       await bika.api.user.editAvatar(cropper.getDataURL())
@@ -66,7 +68,7 @@ const me = computed(() => uni.user.User.userBase.get(pluginName)! as bika.user.U
 const slogan = shallowRef(me.value.customUser.slogan)
 const _editSlogan = async () => {
   isEditingSlogan.value = true
-  const loading = Utils.message.createLoadingMessage('提交中')
+  const loading = createLoadingMessage('提交中')
   try {
     await bika.api.user.editSlogan(slogan.value)
     uni.user.User.userBase.set(pluginName, await bika.api.user.getProfile())
@@ -86,13 +88,13 @@ const _editSlogan = async () => {
         ({ text }) =>
           text == '修改'
             ? uploadToAvatarEditor()
-            : me.avatar && me.avatar.getUrl().then(img => Utils.image.showImagePreview([img]))
+            : me.avatar && me.avatar.getUrl().then(img => showImagePreview([img]))
       "
     >
       <template #reference>
         <VanCell title="头像" clickable>
           <template #right-icon>
-            <Comp.Image :src="me.avatar" round class="size-15" />
+            <DcImage :src="me.avatar" round class="size-15" />
           </template>
         </VanCell>
       </template>
@@ -118,7 +120,7 @@ const _editSlogan = async () => {
       提交简介更新</VanButton
     >
   </div>
-  <Comp.Popup
+  <DcPopup
     v-model:show="AvatarEditor.show.value"
     closeable
     class="flex h-[115vw] w-[90vw] flex-col py-5"
@@ -181,7 +183,7 @@ const _editSlogan = async () => {
         @click="AvatarEditor.updateImg()"
       />
     </div>
-  </Comp.Popup>
+  </DcPopup>
 </template>
 <style scoped>
 :deep(.van-popover__wrapper) {

@@ -1,18 +1,21 @@
 import '@/index.css'
-import type { AxiosResponse } from 'axios'
-
+import { SharedFunction } from '@delta-comic/core'
+import { uni } from '@delta-comic/model'
+import {
+  definePlugin,
+  Global,
+  require,
+  type PluginExpose,
+  type Subscribe
+} from '@delta-comic/plugin'
+import { createAxios, interceptors } from '@delta-comic/request'
+import type {} from '@delta-comic/utils'
 import { UserOutlined } from '@vicons/antd'
 import { DrawOutlined, GTranslateOutlined, SearchOutlined } from '@vicons/material'
+import type { AxiosResponse } from 'axios'
 import axios from 'axios'
 import { MD5 } from 'crypto-js'
 import dayjs from 'dayjs'
-import {
-  definePlugin,
-  requireDepend,
-  uni,
-  Utils,
-  type PluginConfigSubscribe
-} from 'delta-comic-core'
 import { first, inRange, isEmpty } from 'es-toolkit/compat'
 
 import { bika } from './api'
@@ -28,7 +31,9 @@ import { config } from './config'
 import { LayoutPlugin } from './depend'
 import { bikaStore } from './store'
 import { pluginName } from './symbol'
-const { layout } = requireDepend(LayoutPlugin)
+
+const { layout } = require(LayoutPlugin)
+
 const testAxios = axios.create({
   timeout: 7000,
   method: 'GET',
@@ -37,14 +42,11 @@ const testAxios = axios.create({
   }
 })
 
-testAxios.interceptors.response.use(
-  undefined,
-  Utils.request.utilInterceptors.createAutoRetry(testAxios, 2)
-)
+testAxios.interceptors.response.use(undefined, interceptors.createAutoRetry(testAxios, 2))
 
 const diff = async (
-  that: PluginConfigSubscribe,
-  olds: Parameters<PluginConfigSubscribe['getUpdateList']>[0],
+  that: Subscribe.Config,
+  olds: Parameters<Subscribe.Config['getUpdateList']>[0],
   signal?: AbortSignal
 ) => {
   const allList = await Promise.all(
@@ -73,7 +75,7 @@ const diff = async (
   return { isUpdated: isEmpty(changedAuthors), whichUpdated: changedAuthors }
 }
 
-definePlugin({
+const plugin = definePlugin({
   name: pluginName,
   api: {
     api: { forks: () => api, test: (fork, signal) => testAxios.get(fork, { signal }) },
@@ -115,25 +117,19 @@ definePlugin({
         )
       }
     },
-    authorActions: {
+    userActions: {
       search_uploader: {
         name: '搜索该上传者',
         call(author) {
           const user: bika.user.RawUser = author.$$meta?.user
-          return Utils.eventBus.SharedFunction.call('routeToSearch', user._id, [
-            pluginName,
-            'uploader'
-          ])
+          return SharedFunction.call('routeToSearch', user._id, [pluginName, 'uploader'])
         },
         icon: SearchOutlined
       },
       search: {
         name: '搜索',
         call(author) {
-          return Utils.eventBus.SharedFunction.call('routeToSearch', author.label, [
-            pluginName,
-            'keyword'
-          ])
+          return SharedFunction.call('routeToSearch', author.label, [pluginName, 'keyword'])
         },
         icon: SearchOutlined
       }
@@ -170,22 +166,27 @@ definePlugin({
       return bikaStore.loginData.value.email !== '' ? 'logIn' : false
     },
     async logIn(by) {
-      if (bikaStore.loginData.value.email !== '') var form = bikaStore.loginData.value
-      else
-        var form = (bikaStore.loginData.value = await by.form({
-          email: { type: 'string', info: '用户名' },
-          password: { type: 'string', info: '密码' }
-        }))
-      const res = await bika.api.auth.login(form)
-      console.log(res)
-      bikaStore.loginToken.value = res.token
+      try {
+        if (bikaStore.loginData.value.email !== '') var form = bikaStore.loginData.value
+        else
+          var form = (bikaStore.loginData.value = await by.form({
+            email: { type: 'string', info: '用户名' },
+            password: { type: 'string', info: '密码' }
+          }))
+        const res = await bika.api.auth.login(form)
+        console.log(res)
+        bikaStore.loginToken.value = res.token
+      } catch (error) {
+        bikaStore.loginData.value = null
+        throw error
+      }
     },
     async signUp(by) {
       const form = await by.form({
         email: { type: 'string', info: '用户名' },
         name: { type: 'string', info: '展示用户名' },
         password: { type: 'string', info: '密码' },
-        birthday: { type: 'date', info: '生日' },
+        birthday: { type: 'date', info: '生日', format: 'yyyy-MM-dd' },
         gender: {
           type: 'radio',
           comp: 'radio',
@@ -214,7 +215,7 @@ definePlugin({
     console.log('setup...', ins, ins.api?.api)
     if (ins.api?.api) {
       const f = ins.api.api
-      const api = Utils.request.createAxios(
+      const api = createAxios(
         () => f,
         {},
         ins => {
@@ -248,18 +249,14 @@ definePlugin({
         }
       )
       bikaStore.api.value = api
-      Utils.eventBus.SharedFunction.define(
-        bika.api.search.getRandomComic,
-        pluginName,
-        'getRandomProvide'
-      )
+      SharedFunction.define(bika.api.search.getRandomComic, pluginName, 'getRandomProvide')
     }
     if (ins.api?.share) {
       const f = ins.api.share
-      const share = Utils.request.createAxios(() => f)
+      const share = createAxios(() => f)
       bikaStore.share.value = share
     }
-    return { bika }
+    return { bika } as { bika: typeof bika }
   },
   otherProgress: [
     {
@@ -267,7 +264,7 @@ definePlugin({
       async call(setDescription) {
         setDescription('请求网络中')
         initData = await bika.api.search.getInit()
-        uni.content.ContentPage.addCategories(
+        Global.addCategories(
           pluginName,
           ...initData.categories.map(v => ({
             title: v.title,
@@ -291,7 +288,7 @@ definePlugin({
         ])
         uni.user.User.userBase.set(pluginName, user)
         bikaStore.collections.value = collections
-        uni.content.ContentPage.addTabbar(
+        Global.addTabbar(
           pluginName,
           ...collections.map(c => ({ title: c.title, id: MD5(c.title).toString(), comp: Tabbar }))
         )
@@ -395,3 +392,5 @@ definePlugin({
   config: [config]
 })
 let initData: bika.search.Init
+
+export type BikaPlugin = PluginExpose<() => typeof plugin>

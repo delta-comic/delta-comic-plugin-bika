@@ -1,5 +1,5 @@
+import { useConfig } from '@delta-comic/plugin'
 import { enc, HmacSHA256 } from 'crypto-js'
-import { Store } from 'delta-comic-core'
 import { isEmpty } from 'es-toolkit/compat'
 
 import { config } from '@/config'
@@ -19,7 +19,7 @@ export const getBikaApiHeaders = (pathname: string, method: string) => {
     ['Content-Type', 'application/json; charset=UTF-8'],
     ['time', requestTime],
     ['nonce', bikaStore.nonce.value],
-    ['image-quality', Store.useConfig().$load(config).value.imageQuality],
+    ['image-quality', useConfig().$load(config).value.imageQuality],
     [
       'signature',
       HmacSHA256(

@@ -53,10 +53,5 @@ export namespace bika.api.pica {
     pages: number
     total: number
   }
-
-  // eventBus.on('networkError_unauth', () => {
-  //   const bikaStore = useBikaStore()
-  //   bikaStore.loginToken = ''
-  // })
 }
 window.$api.bika = bika

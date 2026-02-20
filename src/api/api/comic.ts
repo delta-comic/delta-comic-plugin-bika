@@ -1,4 +1,5 @@
-import { Store, uni, Utils } from 'delta-comic-core'
+import { PromiseContent, uni } from '@delta-comic/model'
+import { useConfig } from '@delta-comic/plugin'
 import { flatten, times, sortBy } from 'es-toolkit/compat'
 
 import { config } from '@/config'
@@ -6,7 +7,6 @@ import { bikaStore } from '@/store'
 import { pluginName } from '@/symbol'
 
 import type { bika as BikaType } from '..'
-
 import { _bikaComic } from '../comic'
 import {
   bikaStream,
@@ -16,7 +16,6 @@ import {
   createStructFromResponse
 } from './utils'
 export namespace _bikaApiComic {
-  const { PromiseContent } = Utils.data
   export type ResultActionData<T extends string> = { action: T }
   export const likeComic = PromiseContent.fromAsyncFunction((id: string, signal?: AbortSignal) =>
     bikaStore.api.value!.post<ResultActionData<'like' | 'unlike'>>(
@@ -127,11 +126,11 @@ export namespace _bikaApiComic {
   export const clearComicPagesTemp = () => comicsPagesCache.clear()
   const comicPageRequesting = new Map<string, Promise<BikaType.comic.Page[]>>()
   export const getComicPages = async (id: string, index: number, signal?: AbortSignal) => {
-    const key = id + '|' + index + '|' + Store.useConfig().$load(config).value.imageQuality
+    const key = id + '|' + index + '|' + useConfig().$load(config).value.imageQuality
     const pageDB = comicsPagesCache.get(key)
     if (pageDB) return flatten(pageDB.map(v => v.docs.map(v => new _bikaComic.Page(v))))
     if (comicPageRequesting.has(key)) return comicPageRequesting.get(key)!
-    const _pages = new Promise<BikaType.comic.Page[]>(async r => {
+    const _pages = (async () => {
       const firstPage = await getComicPage(id, index, 1, signal)
       const otherPages = new Array<BikaType.api.pica.RawStream<BikaType.comic.Page>>()
       otherPages.push(firstPage)
@@ -143,9 +142,9 @@ export namespace _bikaApiComic {
       const pages = flatten(
         sortBy(otherPages, 'page').map(v => v.docs.map(v => new _bikaComic.Page(v)))
       )
-      r(pages)
       comicsPagesCache.set(key, sortBy(otherPages, 'page'))
-    })
+      return pages
+    })()
     comicPageRequesting.set(key, _pages)
     const pages = await _pages
     comicPageRequesting.delete(key)
