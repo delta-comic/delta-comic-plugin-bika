@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.4.0...1.4.1) (2026-02-23)
+
+
+### Bug Fixes
+
+* [pub] version fix ([20348d4](https://github.com/delta-comic/delta-comic-plugin-bika/commit/20348d420a89af1a1ce23761df269098d7481efe))
+
 # [1.4.0](https://github.com/delta-comic/delta-comic-plugin-bika/compare/1.3.1...1.4.0) (2026-02-20)
 
 
